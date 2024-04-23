@@ -1,4 +1,5 @@
 package com.example.coursetracker;
+
 //https://www.geeksforgeeks.org/android-recyclerview/
 import android.app.Activity;
 import android.content.Context;
