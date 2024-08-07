@@ -24,6 +24,7 @@ public class GraphActivity extends AppCompatActivity {
     // Declare the textView
     private TextView chartTextView;
 
+    // get user information
     private User user = User.getInstance();
     private String username = user.getUsername();
 
@@ -41,13 +42,14 @@ public class GraphActivity extends AppCompatActivity {
         unregisterReceiver(dataUpdateReceiver);
     }
 
-    // Broadcast Receiver
+    // Broadcast Receiver to fetch updates
     private BroadcastReceiver dataUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            // Handle broadcast receiver action
+           
+            // Handle broadcast receiver action to get updates
             if (intent != null && "com.example.coursetracker.DATA_UPDATED".equals(intent.getAction())) {
-                refreshPieChart(); // Refresh
+                refreshPieChart(); // Refresh the chart with updates
             }
         }
     };
@@ -57,6 +59,7 @@ public class GraphActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
+        // define custom colors
         int myTeal = ContextCompat.getColor(this, R.color.teal_200);
 
         // define the components of the gui
@@ -74,7 +77,8 @@ public class GraphActivity extends AppCompatActivity {
         // Fetch the updated data and update the pie chart
         Intent intent = getIntent();
         if (intent != null) {
-            // get the arraylist data from the intent
+            
+            // get the arraylist data from the main activity intent
             ArrayList<String> measurementTitles = intent.getStringArrayListExtra("title");
             ArrayList<String> measurementDescriptions = intent.getStringArrayListExtra("description");
             ArrayList<String> measurementPercents = intent.getStringArrayListExtra("percent");
@@ -82,6 +86,7 @@ public class GraphActivity extends AppCompatActivity {
             // Plot the data
             DBHelper myDb = new DBHelper(this);
             if (measurementTitles != null && measurementDescriptions != null && measurementPercents != null) {
+                
                 // calculate the percentage
                 int totalRequired = 23;
                 int totalCompletedBefore = myDb.getTotalCompleted(username);
